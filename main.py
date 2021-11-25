@@ -27,7 +27,7 @@ def menu() -> None:
         
     connection_obj = device_login(ip, username, password, enable)
 
-    if connection_obj[1] != False:
+    if connection_obj[1] != False or connection_obj[0] is not None:
         table_obj = xe_routing.RoutingIos(connection_obj[0])
         for i in table_obj.route_table:
             print(", ".join(i))
