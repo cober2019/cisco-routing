@@ -1,7 +1,8 @@
-import connections
+"""Class and function that get and parse Cisco XE routing table"""
+
 import ipaddress
 
-def get_vrfs(netmiko_connection: object):
+def get_vrfs(netmiko_connection: object) -> list:
     """Using the connection object created from the netmiko_login(), get routes from device"""
 
     vrfs = []
@@ -17,7 +18,7 @@ def get_vrfs(netmiko_connection: object):
     return vrfs
 
 
-def get_routing_table(netmiko_connection: object, vrfs=None):
+def get_routing_table(netmiko_connection:object, vrfs:str=None) -> list:
     """Using the connection object created from the netmiko_login(), get routes from device"""
 
     routes = None
@@ -34,7 +35,7 @@ def get_routing_table(netmiko_connection: object, vrfs=None):
     return routes
 
 
-def is_subneted(prefix):
+def is_subneted(prefix:str) -> str:
 
     mask = None
 
@@ -42,7 +43,7 @@ def is_subneted(prefix):
         mask = "/" + prefix.split()[0].split("/")[1]
 
     return mask
-    
+
 class RoutingIos():
     """Begin route enty breakdown with various methods"""
 
@@ -67,7 +68,7 @@ class RoutingIos():
         self._parse_global_routing_entries()
         self._parse_vrf_routing_entries()
 
-    def _parse_vrf_routing_entries(self):
+    def _parse_vrf_routing_entries(self)-> None:
         """Parses entries for vrf table"""
 
         vrfs = get_vrfs(self.netmiko_connection)
@@ -76,7 +77,7 @@ class RoutingIos():
             route_entries = get_routing_table(self.netmiko_connection, vrfs=vrf)
             list(map(self._route_breakdown, route_entries))
 
-    def _parse_global_routing_entries(self):
+    def _parse_global_routing_entries(self)-> None:
         """Parses entries with no vrfs"""
 
         route_entries = get_routing_table(self.netmiko_connection)
@@ -86,7 +87,7 @@ class RoutingIos():
         # Clear list for next method
         self.clear_lists()
 
-    def _find_prefix(self, prefix):
+    def _find_prefix(self, prefix:str) -> None:
         """Find prefix in current line"""
 
         if prefix.rfind("via") == -1:
@@ -132,7 +133,7 @@ class RoutingIos():
             except (ipaddress.AddressValueError, IndexError, ValueError, TypeError):
                 pass
 
-    def _get_protocol(self, routing_entry) -> None:
+    def _get_protocol(self, routing_entry:str) -> None:
         """Gets routing protocol from routing entry"""
 
         find_protocol = [protocol for protocol in RoutingIos.route_protocols if protocol in routing_entry[0:5]]
@@ -144,7 +145,7 @@ class RoutingIos():
         else:
             pass
 
-    def _route_breakdown(self, routing_entry: str) -> None:
+    def _route_breakdown(self, routing_entry:str) -> None:
 
         """Breaks down each routing entry for routing attributes"""
 
@@ -191,7 +192,7 @@ class RoutingIos():
                 self.route_age.append(routing_entry.split()[3].strip(","))
                 self.interface.append(routing_entry.split()[4].strip(","))
 
-    def clear_lists(self):
+    def clear_lists(self) -> None:
 
         self.admin_dis = []
         self.metric = []
@@ -199,7 +200,7 @@ class RoutingIos():
         self.route_age = []
         self.interface = []
 
-    def database(self):
+    def database(self) -> list:
 
         if self.route_age:
             try:
