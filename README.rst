@@ -6,8 +6,15 @@ Currently this program get the routing table from Cisco XE device. It then parse
 Idea
 -----
 
-You can also call the routing table class directly and run conditional statements if desired.
+You can also call the routing table class directly and run conditional statements if desired. For example code visit main.py
 
-1. connection_obj = device_login(ip, username, password, enable)
-2. table_obj = xe_routing.RoutingIos(connection_obj[0])
-3. Access class property - able_obj.route_table
+1. Create the object
+2. Check to see if auth is True or if there is an obect
+3. Get the routing table
+4. Call the class property to access the routing table. Data structure is list of lists
+
+        >>> connection_obj = device_login(ip, username, password, enable)
+        >>> if connection_obj[1] != False or connection_obj[0] is not None:
+                table_obj = xe_routing.RoutingIos(connection_obj[0])
+ 
+        >>> [print(", ".join(i)) for i in table_obj.route_table]
