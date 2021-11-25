@@ -1,4 +1,4 @@
-from netmiko import ConnectHandler, ssh_exception
+import connections
 import ipaddress
 
 class RoutingIos():
@@ -36,9 +36,9 @@ class RoutingIos():
         to find the routes and route types."""
 
         if self.enable is None:
-            self.netmiko_connection = netmiko(host=self.host,username=self.username,password=self.password)
+            self.netmiko_connection = connections.netmiko(host=self.host,username=self.username,password=self.password)
         else:
-            self.netmiko_connection = netmiko_w_enable(host=self.host,username=self.username,password=self.password,enable_pass=self.enable)
+            self.netmiko_connection = connections.netmiko_w_enable(host=self.host,username=self.username,password=self.password,enable_pass=self.enable)
 
     def _parse_vrf_routing_entries(self):
         """Parses entries for vrf table"""
