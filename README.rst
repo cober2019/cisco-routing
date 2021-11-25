@@ -1,12 +1,14 @@
 Cisco Routing
 ===============
 
-Currently this program get the routing table from Cisco XE device. It then parses the data and prints the route details. 
+Currently this program gets the routing table from Cisco XE devices. It then parses the data and prints the route details. 
 
 Idea
 -----
 
-You can also call the routing table class directly and run conditional statements if desired. For example code visit main.py
+You can  call the routing table class directly from your program and run conditional statements if desired. For example code visit main.py
+
+**Steps**
 
 1. Create the object
 2. Check to see if auth is True or if there is an obect
