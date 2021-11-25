@@ -1,4 +1,4 @@
-import XeRouting
+import xe_routing
 
 if __name__ == '__main__':
 
@@ -12,6 +12,6 @@ if __name__ == '__main__':
     if enable == '':
         enable = None
 
-    table_obj = XeRouting.RoutingIos(ip, username, password, enable)
+    table_obj = xe_routing.RoutingIos(ip, username, password, enable)
     for i in table_obj.route_table:
         print(", ".join(i))
