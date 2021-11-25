@@ -1,5 +1,17 @@
 from netmiko import ConnectHandler, ssh_exception
 
+def device_login(ip:str, username:str, password:str, enable:str) -> object:
+
+    """Using Netmiko, this methis logs onto the device and gets the routing table. It then loops through each prefix
+    to find the routes and route types."""
+
+    if enable is None:
+        netmiko_connection = netmiko(host=ip,username=username,password=password)
+    else:
+        netmiko_connection = netmiko_w_enable(host=ip,username=username,password=password,enable_pass=enable)
+    
+    return netmiko_connection
+
 def netmiko(host: str = None, username: str = None, password: str = None) -> object:
     """Logs into device and returns a connection object to the caller. """
 
