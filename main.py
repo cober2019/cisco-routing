@@ -13,7 +13,7 @@ def device_login(ip, username, password, enable):
     
     return netmiko_connection
 
-if __name__ == '__main__':
+def menu() -> None:
 
     print('\nXE-Routing Table\n')
     
@@ -26,7 +26,18 @@ if __name__ == '__main__':
         enable = None
         
     connection_obj = device_login(ip, username, password, enable)
-    table_obj = xe_routing.RoutingIos(connection_obj)
+
+    if connection_obj[1] != False:
+        table_obj = xe_routing.RoutingIos(connection_obj[0])
+        for i in table_obj.route_table:
+            print(", ".join(i))
+        menu()
+    else:
+        print('\nLogin Failed\n')
+        menu()
+
+if __name__ == '__main__':
+
+    menu()
     
-    for i in table_obj.route_table:
-        print(", ".join(i))
+    
