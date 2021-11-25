@@ -39,7 +39,7 @@ def netmiko_w_enable(host: str = None, username: str = None, password: str = Non
         device_connect = ConnectHandler(**credentials)
         auth = True
     except ssh_exception.AuthenticationException:
-        raise ConnectionError("Could not connect to device {}".format(host))
+        pass
 
     return device_connect, auth
 
