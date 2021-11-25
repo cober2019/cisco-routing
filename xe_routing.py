@@ -26,19 +26,8 @@ class RoutingIos():
         self.interface = []
         self._route_table = []
 
-        self.device_login()
         self._parse_global_routing_entries()
         self._parse_vrf_routing_entries()
-
-    def device_login(self):
-
-        """Using Netmiko, this methis logs onto the device and gets the routing table. It then loops through each prefix
-        to find the routes and route types."""
-
-        if self.enable is None:
-            self.netmiko_connection = connections.netmiko(host=self.host,username=self.username,password=self.password)
-        else:
-            self.netmiko_connection = connections.netmiko_w_enable(host=self.host,username=self.username,password=self.password,enable_pass=self.enable)
 
     def _parse_vrf_routing_entries(self):
         """Parses entries for vrf table"""
