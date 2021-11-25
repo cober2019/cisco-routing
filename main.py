@@ -1,5 +1,6 @@
 import xe_routing
 import connections
+import traceback
 
 def device_login(ip, username, password, enable):
 
@@ -38,6 +39,11 @@ def menu() -> None:
 
 if __name__ == '__main__':
 
-    menu()
+    try:
+        menu()
+    except BaseException:
+        print(f'\n\n\nSomething Is Really Wrong. Please submit an issue with the following log:\n')
+        print(traceback.print_exc())
+        menu()
     
     
