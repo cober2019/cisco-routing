@@ -1,6 +1,48 @@
 import connections
 import ipaddress
 
+def get_vrfs(netmiko_connection: object):
+    """Using the connection object created from the netmiko_login(), get routes from device"""
+
+    vrfs = []
+    send_vrfs = netmiko_connection.send_command(command_string="show vrf")
+
+    cli_line = send_vrfs.split("\n")
+    for line in cli_line:
+        if "Name" in line:
+            pass
+        else:
+            vrfs.append(line.split()[0])
+
+    return vrfs
+
+
+def get_routing_table(netmiko_connection: object, vrfs=None):
+    """Using the connection object created from the netmiko_login(), get routes from device"""
+
+    routes = None
+
+    if not vrfs:
+        netmiko_connection.send_command(command_string="terminal length 0")
+        routes = netmiko_connection.send_command(command_string="show ip route")
+    elif vrfs:
+        netmiko_connection.send_command(command_string="terminal length 0")
+        routes = netmiko_connection.send_command(command_string=f"show ip route vrf {vrfs}")
+
+    routes = routes.split("\n")
+
+    return routes
+
+
+def is_subneted(prefix):
+
+    mask = None
+
+    if prefix.rfind("subnetted") != -1:
+        mask = "/" + prefix.split()[0].split("/")[1]
+
+    return mask
+    
 class RoutingIos():
     """Begin route enty breakdown with various methods"""
 
