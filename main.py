@@ -2,7 +2,7 @@ import xe_routing
 import connections
 import traceback
 
-def device_login(ip, username, password, enable):
+def device_login(ip:str, username:str, password:str, enable:str) -> object:
 
     """Using Netmiko, this methis logs onto the device and gets the routing table. It then loops through each prefix
     to find the routes and route types."""
