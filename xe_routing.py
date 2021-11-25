@@ -7,7 +7,7 @@ class RoutingIos():
     route_protocols = ("L", "C", "S", "R", "M", "B", "D", "D EX", "O", "O IA", "O N1", "O N2", "O E1", "O E2", "i",
                        "i su", "i L1", "i l2", "*", "U", "o", "P", "H", "l", "a", "+", "%", "p", "S*")
 
-    def __init__(self, host=None, connection_obj):
+    def __init__(self, connection_obj):
         
         self.netmiko_connection = connection_obj
         self.mask = None
