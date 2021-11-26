@@ -1,6 +1,4 @@
-"""Entry point/main menu for routing tables"""
-
-import xe_routing, asa_routing
+import xe_routing, asa_routing, nxos_routing
 import connections
 import traceback
 
@@ -29,8 +27,8 @@ def device_login() -> object:
 
 def menu() -> None:
 
-    print('\nRouting Tables\n')
-    selection = input('1. XE-Routing\n2. ASA Routing\\n')
+    print('\nXE-Routing Table\n')
+    selection = input('1. XE-Routing\n2. ASA Routing\n3. NXOS Routing\n\nSelection: ')
     netmiko_connection = device_login()
 
     if selection == '1':
@@ -40,6 +38,10 @@ def menu() -> None:
     elif selection == '2':
         route_obj = asa_routing.RoutingAsa(netmiko_connection)
         [print(", ".join(i)) for i in route_obj.route_table if None not in i]
+        menu()
+    elif selection == '3':
+        route_obj = nxos_routing.RoutingNexus(netmiko_connection)
+        [print(", ".join(i)) for i in route_obj.route_table]
         menu()
     else:
         print('Invalid Selection')
