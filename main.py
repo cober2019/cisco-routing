@@ -30,7 +30,7 @@ def device_login() -> object:
 def menu() -> None:
 
     print('\nRouting Tables\n')
-    selection = input('1. XE-Routing\n2. ASA Routing\n3. Nexus Routing\n')
+    selection = input('1. XE-Routing\n2. ASA Routing\\n')
     netmiko_connection = device_login()
 
     if selection == '1':
