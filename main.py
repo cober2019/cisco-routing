@@ -1,23 +1,9 @@
-import xe_routing
+import xe_routing, asa_routing
 import connections
 import traceback
 
-def device_login(ip:str, username:str, password:str, enable:str) -> object:
+def device_login() -> object:
 
-    """Using Netmiko, this methis logs onto the device and gets the routing table. It then loops through each prefix
-    to find the routes and route types."""
-
-    if enable is None:
-        netmiko_connection = connections.netmiko(host=ip,username=username,password=password)
-    else:
-        netmiko_connection = connections.netmiko_w_enable(host=ip,username=username,password=password,enable_pass=enable)
-    
-    return netmiko_connection
-
-def menu() -> None:
-
-    print('\nXE-Routing Table\n')
-    
     ip = input('IP: ')
     username = input('Username: ')
     password = input('Password: ')
@@ -25,17 +11,38 @@ def menu() -> None:
     
     if enable == '':
         enable = None
-        
-    connection_obj = device_login(ip, username, password, enable)
 
-    if connection_obj[1] != False or connection_obj[0] is not None:
-        table_obj = xe_routing.RoutingIos(connection_obj[0])
-        for i in table_obj.route_table:
-            print(", ".join(i))
-        menu()
+    if enable is None:
+        netmiko_connection = connections.netmiko(host=ip,username=username,password=password)
+    else:
+        netmiko_connection = connections.netmiko_w_enable(host=ip,username=username,password=password,enable_pass=enable)
+    
+    if netmiko_connection[1] != False or netmiko_connection[0] is not None:
+        pass
     else:
         print('\nLogin Failed\n')
         menu()
+
+    return netmiko_connection[0]
+
+def menu() -> None:
+
+    print('\nXE-Routing Table\n')
+    selection = input('1. XE-Routing\n2. ASA Routing\n3. Nexus Routing\n')
+    netmiko_connection = device_login()
+
+    if selection == '1':
+        route_obj = xe_routing.RoutingIos(netmiko_connection)
+        [print(", ".join(i)) for i in route_obj.route_table]
+        menu()
+    elif selection == '2':
+        route_obj = asa_routing.RoutingAsa(netmiko_connection)
+        [print(", ".join(i)) for i in route_obj.route_table if None not in i]
+        menu()
+    else:
+        print('Invalid Selection')
+        menu()
+
 
 if __name__ == '__main__':
 
