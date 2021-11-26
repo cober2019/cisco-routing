@@ -1,7 +1,7 @@
 Cisco Routing
 ===============
 
-Currently this program gets the routing table from Cisco XE devices. It then parses the data and prints the route details. 
+Currently this program gets the routing tables from Cisco XE and ASA devices. It then parses the data and prints the route details. 
 
 Idea
 -----
