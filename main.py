@@ -1,3 +1,5 @@
+"""Entry point/main menu for routing tables"""
+
 import xe_routing, asa_routing
 import connections
 import traceback
