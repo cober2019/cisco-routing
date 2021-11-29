@@ -10,8 +10,8 @@ You can  call the routing table class directly from your program and run conditi
 
 **Steps:**
 
-1. Create the object
-2. Get the routing table
+1. Create a connection object
+2. Create a routing table object
 3. Call the class property to access the routing table. Data structure is list of lists
 
         >>> connection_obj = device_login(ip, username, password, enable)
