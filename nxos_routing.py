@@ -21,17 +21,16 @@ def get_vdcs(netmiko_connection) -> list:
     """Using the connection object created from the netmiko_login(), get vdcs"""
 
     vdcs = []
-    netmiko_connection = netmiko_connection
     netmiko_connection.send_command(command_string="terminal length 0")
     get_vdc = netmiko_connection.send_command(command_string="show vdc detail")
-    lines = get_vdc.split("\n")
 
-    for line in lines:
-        if line.rfind("vdc name") != -1:
-            vdc = line.split()[2]
-            vdcs.append(vdc)
-        else:
-            pass
+    if get_vdc:
+        for line in get_vdc.splitlines():
+            if line.rfind("vdc name") != -1:
+                vdc = line.split()[2]
+                vdcs.append(vdc)
+            else:
+                pass
 
     return vdcs
 
@@ -40,19 +39,20 @@ def get_vrfs(netmiko_connection, vdc) -> list:
     """Using the connection object created from the netmiko_login(), get routes from device"""
 
     vrfs = []
+    
     netmiko_connection.send_command(command_string=f"switchto vdc {vdc}", expect_string="")
     time.sleep(3)
     netmiko_connection.send_command(command_string="terminal length 0")
-    send_vrfs = netmiko_connection.send_command(command_string="show vrf")
-    lines = send_vrfs.split("\n")
+    get_vrfs = netmiko_connection.send_command(command_string="show vrf")
 
-    for line in lines:
-        if line.rfind("VRF-Name") != -1:
-            pass
-        elif not line.split():
-            pass
-        else:
-            vrfs.append(line.split()[0])
+    if get_vrfs:
+        for line in get_vrfs.splitlines():
+            if line.rfind("VRF-Name") != -1:
+                pass
+            elif not line.split():
+                pass
+            else:
+                vrfs.append(line.split()[0])
 
     return vrfs
 
