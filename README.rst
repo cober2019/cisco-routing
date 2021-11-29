@@ -11,9 +11,8 @@ You can  call the routing table class directly from your program and run conditi
 **Steps**
 
 1. Create the object
-2. Check to see if auth is True or if there is an object
-3. Get the routing table
-4. Call the class property to access the routing table. Data structure is list of lists
+2. Get the routing table
+3. Call the class property to access the routing table. Data structure is list of lists
 
         >>> connection_obj = device_login(ip, username, password, enable)
         >>> table_obj = xe_routing.RoutingIos(netmiko_connection)
