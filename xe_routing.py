@@ -8,12 +8,13 @@ def get_vrfs(netmiko_connection: object) -> list:
     vrfs = []
     send_vrfs = netmiko_connection.send_command(command_string="show vrf")
 
-    cli_line = send_vrfs.split("\n")
-    for line in cli_line:
-        if "Name" in line:
-            pass
-        else:
-            vrfs.append(line.split()[0])
+    cli_line = send_vrfs.splitlines()
+    if cli_line:
+        for line in cli_line:
+            if "Name" in line:
+                pass
+            else:
+                vrfs.append(line.split()[0])
 
     return vrfs
 
