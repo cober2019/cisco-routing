@@ -16,5 +16,5 @@ You can  call the routing table class directly from your program and run conditi
 4. Call the class property to access the routing table. Data structure is list of lists
 
         >>> connection_obj = device_login(ip, username, password, enable)
-        >>> route_obj = xe_routing.RoutingIos(netmiko_connection)
+        >>> table_obj = xe_routing.RoutingIos(netmiko_connection)
         >>> [print(", ".join(i)) for i in table_obj.route_table]
