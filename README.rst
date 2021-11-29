@@ -17,6 +17,6 @@ You can  call the routing table class directly from your program and run conditi
 
         >>> connection_obj = device_login(ip, username, password, enable)
         >>> if connection_obj[1] != False or connection_obj[0] is not None:
-                table_obj = xe_routing.RoutingIos(connection_obj[0])
+                table_obj = xe_routing.RoutingIos(connection_obj)
  
         >>> [print(", ".join(i)) for i in table_obj.route_table]
